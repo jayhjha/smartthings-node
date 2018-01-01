@@ -8,7 +8,7 @@ export default class Apps {
     this.personalAccessToken = personalAccessToken;
   }
 
-  listApps(queryParams: {}) : rp.RequestPromise {
+  listApps(queryParams: {appType: string}) : rp.RequestPromise {
     return buildRequests(this.personalAccessToken, 'apps', 'GET', queryParams);
   }
 }
