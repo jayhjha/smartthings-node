@@ -1,8 +1,10 @@
+import * as rp from 'request-promise';
+
 import Devices from './devices';
 import Apps from './apps';
 
 export class SmartThings {
-  private personalAccessToken: string;
+  protected personalAccessToken: string;
   public devices : Devices;
   public apps: Apps;
 
