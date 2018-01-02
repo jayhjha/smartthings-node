@@ -1,5 +1,5 @@
 import * as rp from 'request-promise';
-import buildRequests from './requestbuilder';
+import buildRequest from './requestbuilder';
 
 export default class Devices {
   personalAccessToken: string;
@@ -24,36 +24,46 @@ export default class Devices {
   }
 
   listDevices(queryParams: {locationId?: string, capability?: string, deviceId?: string}) : rp.RequestPromise {
-    return buildRequests(this.personalAccessToken, 'devices', 'GET', queryParams);
+    return buildRequest(this.personalAccessToken, 'devices', 'GET', queryParams);
+  }
+
+  installDevice(smartAppToken: string, body: {label?: string, locationId: string, app: {profileId: string, 
+                installedAppId: string, externalId?: string}}) {
+    return buildRequest(smartAppToken, 'devices', 'POST', body);
   }
 
   getDeviceDescription(deviceId: string): rp.RequestPromise {
-    return buildRequests(this.personalAccessToken, `devices/${deviceId}`, 'GET');
-  }
-
-  getDeviceStatus(deviceId: string): rp.RequestPromise {
-    return buildRequests(this.personalAccessToken, `devices/${deviceId}/status`, 'GET');
-  }
-
-  getDeviceComponentStatus(deviceId: string, componentId: string): rp.RequestPromise {
-    return buildRequests(this.personalAccessToken, `devices/${deviceId}/components/${componentId}/status`, 'GET');
-  }
-
-  getDeviceCapabilityStatus(deviceId: string, componentId: string, capability: string): rp.RequestPromise {
-    return buildRequests(this.personalAccessToken,
-      `devices/${deviceId}/components/${componentId}/capabilities/${capability}/status`, 'GET');
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}`, 'GET');
   }
 
   deleteDevice(deviceId: string): rp.RequestPromise {
-    return buildRequests(this.personalAccessToken, `devices/${deviceId}`, 'DELETE');
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}`, 'DELETE');
   }
 
   updateDevice(deviceId: string, label: string): rp.RequestPromise {
     let body = {label: label};
-    return buildRequests(this.personalAccessToken, `devices/${deviceId}`, 'PUT', body);
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}`, 'PUT', body);
   }
 
   executeDeviceCommand(deviceId: string, commands: Array<{}>): rp.RequestPromise {
-    return buildRequests(this.personalAccessToken, `devices/${deviceId}/commands`, 'POST', commands);
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}/commands`, 'POST', commands);
+  }
+
+  //TODO:: Not working. Figure out how device events work
+  createDeviceEvents(deviceId: string, deviceEvents: Array<{}>): rp.RequestPromise {
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}/events`, 'POST', deviceEvents);
+  }
+
+  getDeviceStatus(deviceId: string): rp.RequestPromise {
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}/status`, 'GET');
+  }
+
+  getDeviceComponentStatus(deviceId: string, componentId: string): rp.RequestPromise {
+    return buildRequest(this.personalAccessToken, `devices/${deviceId}/components/${componentId}/status`, 'GET');
+  }
+
+  getDeviceCapabilityStatus(deviceId: string, componentId: string, capability: string): rp.RequestPromise {
+    return buildRequest(this.personalAccessToken,
+      `devices/${deviceId}/components/${componentId}/capabilities/${capability}/status`, 'GET');
   }
 }
