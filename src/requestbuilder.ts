@@ -17,7 +17,7 @@ export default function buildRequest(token: string, path: string, method: string
   };
 
   if (params) {
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'DELETE') {
       options.qs = params;
     } else if (method === 'POST') {
       options.body = params; 

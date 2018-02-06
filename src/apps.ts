@@ -32,7 +32,8 @@ export default class Apps {
     return buildRequest(this.personalAccessToken, 'apps', 'POST', body);
   }
 
-  listApps(queryParams: {appType: string}) : rp.RequestPromise {
+  listApps(appType: string) : rp.RequestPromise {
+    let queryParams = {appType: appType};
     return buildRequest(this.personalAccessToken, 'apps', 'GET', queryParams);
   }
 
