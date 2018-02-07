@@ -1,8 +1,7 @@
 import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
-import { map } from 'bluebird';
 
-interface DeviceComponent {
+export class DeviceComponent {
   id: string
   capabilities: Array<String>
 }
@@ -18,7 +17,7 @@ export default class DeviceProfiles {
     return buildRequest(this.personalAccessToken, `deviceprofiles`, 'GET');
   }
 
-  createDeviceProfile(name: string, components: Array<DeviceComponent>, metadata?: {}) : rp.RequestPromise{
+  createDeviceProfile(name: string, components: Array<DeviceComponent>, metadata?: {}) : rp.RequestPromise {
     let body = {
       name: name, 
       components: components,

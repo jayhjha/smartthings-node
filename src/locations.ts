@@ -1,6 +1,5 @@
 import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
-import { map } from 'bluebird';
 
 export default class Locations {
   personalAccessToken: string;
