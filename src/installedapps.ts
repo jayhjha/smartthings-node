@@ -2,10 +2,10 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class InstalledApps {
-  personalAccessToken: string;
+  authToken: string;
 
-  constructor(personalAccessToken: string) {
-    this.personalAccessToken = personalAccessToken;
+  constructor(authToken: string) {
+    this.authToken = authToken;
   }
 
   listInstalledApps(locationId: string, installedAppStatus?: string) {
@@ -15,11 +15,11 @@ export default class InstalledApps {
     } else {
       queryParams = {locationId: locationId};
     }
-    return buildRequest(this.personalAccessToken, `installedapps`, 'GET', queryParams);
+    return buildRequest(this.authToken, `installedapps`, 'GET', queryParams);
   }
 
   getInstalledApp(installedAppId: string) {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}`, 'GET');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}`, 'GET');
   }
 
   deleteInstalledApp(installedAppId: string, locationId?: string) {
@@ -27,7 +27,7 @@ export default class InstalledApps {
     if (locationId) {
       queryParams = {locationId: locationId};
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}`, 'DELETE', queryParams);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}`, 'DELETE', queryParams);
   }
   
   getInstalledAppConfig(installedAppId: string, configStatus?: string) {
@@ -35,10 +35,10 @@ export default class InstalledApps {
     if (configStatus) {
       queryParams = {configStatus: configStatus};
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/configs`, 'GET', queryParams);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/configs`, 'GET', queryParams);
   }
 
   getInstalledAppConfigEntries(installedAppId: string, configId: string) {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/configs/${configId}`, 'GET');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/configs/${configId}`, 'GET');
   }
 }

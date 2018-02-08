@@ -2,13 +2,14 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class Apps {
-  personalAccessToken: string;
+  authToken: string;
 
-  constructor(personalAccessToken: string) {
-    this.personalAccessToken = personalAccessToken;
+  constructor(authToken: string) {
+    this.authToken = authToken;
   }
 
-  createWebHookApp(appName: string,  displayName: string, description: string, targetUrl: string, singleInstance?: boolean): rp.RequestPromise {
+  createWebHookApp(appName: string,  displayName: string, description: string, 
+                    targetUrl: string, singleInstance?: boolean) : rp.RequestPromise {
     let body = {
       appName: appName,
       displayName: displayName,
@@ -17,10 +18,11 @@ export default class Apps {
       appType: 'WEBHOOK_SMART_APP',
       targetUrl: targetUrl
     };
-    return buildRequest(this.personalAccessToken, 'apps', 'POST', body);
+    return buildRequest(this.authToken, 'apps', 'POST', body);
   }
 
-  createLambdaApp(appName: string,  displayName: string, description: string, functions: Array<String>, singleInstance?: boolean): rp.RequestPromise{
+  createLambdaApp(appName: string,  displayName: string, description: string, 
+                  functions: Array<String>, singleInstance?: boolean): rp.RequestPromise {
     let body = {
       appName: appName,
       displayName: displayName,
@@ -29,20 +31,20 @@ export default class Apps {
       appType: 'LAMBDA_SMART_APP',
       functions: functions
     };
-    return buildRequest(this.personalAccessToken, 'apps', 'POST', body);
+    return buildRequest(this.authToken, 'apps', 'POST', body);
   }
 
   listApps(appType: string) : rp.RequestPromise {
     let queryParams = {appType: appType};
-    return buildRequest(this.personalAccessToken, 'apps', 'GET', queryParams);
+    return buildRequest(this.authToken, 'apps', 'GET', queryParams);
   }
 
-  getAppDetails(appNameOrId: string): rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}`, 'GET');
+  getAppDetails(appNameOrId: string) : rp.RequestPromise {
+    return buildRequest(this.authToken, `apps/${appNameOrId}`, 'GET');
   }
 
-  updateWebHookApp(appNameOrId: string, appName: string,  displayName: string, description: string,
-                   targetUrl: string, singleInstance?: boolean): rp.RequestPromise {
+  updateWebHookApp(appNameOrId: string, appName: string,  displayName: string, 
+                   description: string, targetUrl: string, singleInstance?: boolean) : rp.RequestPromise {
     let body = {
       appName: appName,
       displayName: displayName,
@@ -51,10 +53,11 @@ export default class Apps {
       appType: 'WEBHOOK_SMART_APP',
       targetUrl: targetUrl
     };
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}`, 'PUT', body);
+    return buildRequest(this.authToken, `apps/${appNameOrId}`, 'PUT', body);
   }
 
-  updateLambdaApp(appNameOrId: string, appName: string, displayName: string, description: string, functions: Array<String>, singleInstance?: boolean): rp.RequestPromise{
+  updateLambdaApp(appNameOrId: string, appName: string, displayName: string, 
+                  description: string, functions: Array<String>, singleInstance?: boolean) : rp.RequestPromise {
     let body = {
       appName: appName,
       displayName: displayName,
@@ -63,31 +66,31 @@ export default class Apps {
       appType: 'LAMBDA_SMART_APP',
       functions: functions
     };
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}`, 'PUT', body);
+    return buildRequest(this.authToken, `apps/${appNameOrId}`, 'PUT', body);
   }
 
-  deleteApp(appNameOrId: string): rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}`, 'DELETE');
+  deleteApp(appNameOrId: string) : rp.RequestPromise {
+    return buildRequest(this.authToken, `apps/${appNameOrId}`, 'DELETE');
   }
 
-  getAppSettings(appNameOrId: string): rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}/settings`, 'GET');
+  getAppSettings(appNameOrId: string) : rp.RequestPromise {
+    return buildRequest(this.authToken, `apps/${appNameOrId}/settings`, 'GET');
   }
 
-  updateAppSettings(appNameOrId: string, settings: {}): rp.RequestPromise {
+  updateAppSettings(appNameOrId: string, settings: {}) : rp.RequestPromise {
     let body = {settings: settings};
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}/settings`, 'PUT', body);
+    return buildRequest(this.authToken, `apps/${appNameOrId}/settings`, 'PUT', body);
   }
 
-  getAppOAuthSettings(appNameOrId: string) {
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}/oauth`, 'GET');
+  getAppOAuthSettings(appNameOrId: string) : rp.RequestPromise {
+    return buildRequest(this.authToken, `apps/${appNameOrId}/oauth`, 'GET');
   }
 
-  updateAppOAuthSettings(appNameOrId: string, body: {clientName: string, scope: Array<string>}): rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}/oauth`, 'PUT', body);
+  updateAppOAuthSettings(appNameOrId: string, body: {clientName: string, scope: Array<string>}) : rp.RequestPromise {
+    return buildRequest(this.authToken, `apps/${appNameOrId}/oauth`, 'PUT', body);
   }
 
-  generateAppOAuthClientSecret(appNameOrId: string, body: {client: string, scope: string}): rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `apps/${appNameOrId}/oauth/generate`, 'POST', body);
+  generateAppOAuthClientSecret(appNameOrId: string, body: {client: string, scope: string}) : rp.RequestPromise {
+    return buildRequest(this.authToken, `apps/${appNameOrId}/oauth/generate`, 'POST', body);
   }
 }

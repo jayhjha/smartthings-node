@@ -2,14 +2,14 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class Subscriptions {
-  personalAccessToken: string;
+  authToken: string;
 
-  constructor(personalAccessToken: string) {
-    this.personalAccessToken = personalAccessToken;
+  constructor(authToken: string) {
+    this.authToken = authToken;
   }
 
   listAppSubscriptions(installedAppId: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/subscriptions`, 'GET');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'GET');
   }
 
   createDeviceSubscriptions(installedAppId: string, deviceId: string, componentId: string, capability: string, 
@@ -26,7 +26,7 @@ export default class Subscriptions {
         subscriptionName: subscriptionName
       }
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
   }
 
   createCapabilitySubscriptions(installedAppId: string, locationId: string, capability: string, attrribute: string, 
@@ -42,7 +42,7 @@ export default class Subscriptions {
         subscriptionName: subscriptionName
       }
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
   }
  
   deleteAllAppSubscriptions(installedAppId: string, deviceId?: string) : rp.RequestPromise {
@@ -50,14 +50,14 @@ export default class Subscriptions {
     if (deviceId) {
       queryParams = {deviceId: deviceId};
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/subscriptions`, 'DELETE', queryParams);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'DELETE', queryParams);
   }
 
   getSubscriptionDetails(installedAppId: string, subscriptionId: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'GET');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'GET');
   }
 
   deleteSpecificSubscriptions(installedAppId: string, subscriptionId: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'DELETE');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'DELETE');
   }
 }

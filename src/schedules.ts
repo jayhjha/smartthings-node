@@ -2,14 +2,14 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class Schedules {
-  personalAccessToken: string;
+  authToken: string;
 
-  constructor(personalAccessToken: string) {
-    this.personalAccessToken = personalAccessToken;
+  constructor(authToken: string) {
+    this.authToken = authToken;
   }
 
   listAppSchedules(installedAppId: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/schedules`, 'GET');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'GET');
   }
 
   createOnceSchedule(installedAppId: string, scheduleName: string, time: number, overwrite: boolean) {
@@ -20,7 +20,7 @@ export default class Schedules {
         overwrite: overwrite
       }
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
   }
 
   createCronSchedule(installedAppId: string, scheduleName: string, expression: string, timezone: string) {
@@ -31,18 +31,18 @@ export default class Schedules {
         timezone: timezone
       }
     }
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
   }
  
   deleteAllAppSchedules(installedAppId: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/schedules`, 'DELETE');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'DELETE');
   }
 
   getScheduleDetails(installedAppId: string, scheduleName: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'GET');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'GET');
   }
 
   deleteSpecificSchedule(installedAppId: string, scheduleName: string) : rp.RequestPromise {
-    return buildRequest(this.personalAccessToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'DELETE');
+    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'DELETE');
   }
 }
