@@ -7,7 +7,7 @@ import Subscriptions from './subscriptions';
 import Schedules from './schedules';
 
 export class SmartThings {
-  protected authToken: string;
+  protected personalAccessToken: string;
   
   public apps: Apps;
   public devices : Devices;
@@ -17,14 +17,14 @@ export class SmartThings {
   public subscriptions: Subscriptions;
   public schedules: Schedules;
 
-  constructor(authToken: string) {
-    this.authToken = authToken;
-    this.apps = new Apps(this.authToken);
-    this.deviceProfiles = new DeviceProfiles(this.authToken);
-    this.devices = new Devices(this.authToken);
-    this.installedApps = new InstalledApps(this.authToken);
-    this.locations = new Locations(this.authToken);
-    this.subscriptions = new Subscriptions(this.authToken);
-    this.schedules = new Schedules(this.authToken);
+  constructor(personalAccessToken: string) {
+    this.personalAccessToken = personalAccessToken;
+    this.apps = new Apps(this.personalAccessToken);
+    this.deviceProfiles = new DeviceProfiles(this.personalAccessToken);
+    this.devices = new Devices(this.personalAccessToken);
+    this.installedApps = new InstalledApps(this.personalAccessToken);
+    this.locations = new Locations(this.personalAccessToken);
+    this.subscriptions = new Subscriptions(this.personalAccessToken);
+    this.schedules = new Schedules(this.personalAccessToken);
   }
 }

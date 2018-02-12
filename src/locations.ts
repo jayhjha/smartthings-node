@@ -2,14 +2,14 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class Locations {
-  authToken: string;
+  personalAccessToken: string;
 
-  constructor(authToken: string) {
-    this.authToken = authToken;
+  constructor(personalAccessToken: string) {
+    this.personalAccessToken = personalAccessToken;
   }
 
   getLocations() {
-    return buildRequest(this.authToken, `locations`, 'GET');
+    return buildRequest(this.personalAccessToken, `locations`, 'GET');
   }
 
   createLocation(name: string, countryCode: string, latitude?: number, longitude?: number,
@@ -26,11 +26,12 @@ export default class Locations {
     if (temperatureScale) body.temperatureScale = temperatureScale;
     if (locale) body.locale = locale;
 
-    return buildRequest(this.authToken, 'locations', 'POST', body);
+    return buildRequest(this.personalAccessToken, 'locations', 'POST', body);
   }
 
-  getLocationDetails(locationId: string) {
-    return buildRequest(this.authToken, `locations/${locationId}`, 'GET');
+  getLocationDetails(locationId: string, smartAppToken?: string) {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(this.personalAccessToken, `locations/${locationId}`, 'GET');
   }
 
   updateLocation(locationId: string, name?: string, latitude?: number, longitude?: number,
@@ -47,10 +48,17 @@ export default class Locations {
 
     console.log(body);
 
-    return buildRequest(this.authToken, `locations/${locationId}`, 'PUT', body);
+    return buildRequest(this.personalAccessToken, `locations/${locationId}`, 'PUT', body);
   }
 
   deleteLocation(locationId: string) {
-    return buildRequest(this.authToken, `locations/${locationId}`, 'DELETE');
+    return buildRequest(this.personalAccessToken, `locations/${locationId}`, 'DELETE');
+  }
+  
+  getAuthToken(token: string | undefined) : string {
+    if (token) {
+      return token;
+    }
+    return this.personalAccessToken;
   }
 }

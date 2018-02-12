@@ -2,18 +2,21 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class Subscriptions {
-  authToken: string;
+  personalAccessToken: string;
 
-  constructor(authToken: string) {
-    this.authToken = authToken;
+  constructor(personalAccessToken: string) {
+    this.personalAccessToken = personalAccessToken;
   }
 
-  listAppSubscriptions(installedAppId: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'GET');
+  listAppSubscriptions(installedAppId: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/subscriptions`, 'GET');
   }
 
-  createDeviceSubscriptions(installedAppId: string, deviceId: string, componentId: string, capability: string, 
-                            attrribute: string, value: object, stateChangeOnly: boolean, subscriptionName: string) {
+  createDeviceSubscriptions(installedAppId: string, deviceId: string, componentId: string, 
+                            capability: string, attrribute: string, value: object, 
+                            stateChangeOnly: boolean, subscriptionName: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
     let body = {
       sourceType: "DEVICE",
       device: {
@@ -26,11 +29,13 @@ export default class Subscriptions {
         subscriptionName: subscriptionName
       }
     }
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
+    return buildRequest(authToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
   }
 
-  createCapabilitySubscriptions(installedAppId: string, locationId: string, capability: string, attrribute: string, 
-                                value: object, stateChangeOnly: boolean, subscriptionName: string) {
+  createCapabilitySubscriptions(installedAppId: string, locationId: string, capability: string, 
+                                attrribute: string, value: object, stateChangeOnly: boolean, 
+                                subscriptionName: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
     let body = {
       sourceType: "CAPABILITY",
       device: {
@@ -42,22 +47,32 @@ export default class Subscriptions {
         subscriptionName: subscriptionName
       }
     }
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
+    return buildRequest(authToken, `installedApps/${installedAppId}/subscriptions`, 'POST', body);
   }
  
-  deleteAllAppSubscriptions(installedAppId: string, deviceId?: string) : rp.RequestPromise {
+  deleteAllAppSubscriptions(installedAppId: string, deviceId?: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
     let queryParams = {};
     if (deviceId) {
       queryParams = {deviceId: deviceId};
     }
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions`, 'DELETE', queryParams);
+    return buildRequest(authToken, `installedApps/${installedAppId}/subscriptions`, 'DELETE', queryParams);
   }
 
-  getSubscriptionDetails(installedAppId: string, subscriptionId: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'GET');
+  getSubscriptionDetails(installedAppId: string, subscriptionId: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'GET');
   }
 
-  deleteSpecificSubscriptions(installedAppId: string, subscriptionId: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'DELETE');
+  deleteSpecificSubscriptions(installedAppId: string, subscriptionId: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/subscriptions/${subscriptionId}`, 'DELETE');
+  }
+
+  getAuthToken(token: string | undefined) : string {
+    if (token) {
+      return token;
+    }
+    return this.personalAccessToken;
   }
 }

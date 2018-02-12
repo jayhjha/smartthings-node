@@ -2,17 +2,20 @@ import * as rp from 'request-promise';
 import buildRequest from './requestbuilder';
 
 export default class Schedules {
-  authToken: string;
+  personalAccessToken: string;
 
-  constructor(authToken: string) {
-    this.authToken = authToken;
+  constructor(personalAccessToken: string) {
+    this.personalAccessToken = personalAccessToken;
   }
 
-  listAppSchedules(installedAppId: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'GET');
+  listAppSchedules(installedAppId: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/schedules`, 'GET');
   }
 
-  createOnceSchedule(installedAppId: string, scheduleName: string, time: number, overwrite: boolean) {
+  createOnceSchedule(installedAppId: string, scheduleName: string, time: number, overwrite: boolean,
+                     smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
     let body = {
       scheduleName: scheduleName,
       once: {
@@ -20,10 +23,12 @@ export default class Schedules {
         overwrite: overwrite
       }
     }
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
+    return buildRequest(authToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
   }
 
-  createCronSchedule(installedAppId: string, scheduleName: string, expression: string, timezone: string) {
+  createCronSchedule(installedAppId: string, scheduleName: string, expression: string, timezone: string, 
+                     smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
     let body = {
       scheduleName: scheduleName,
       cron: {
@@ -31,18 +36,28 @@ export default class Schedules {
         timezone: timezone
       }
     }
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
+    return buildRequest(authToken, `installedApps/${installedAppId}/schedules`, 'POST', body);
   }
  
-  deleteAllAppSchedules(installedAppId: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules`, 'DELETE');
+  deleteAllAppSchedules(installedAppId: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/schedules`, 'DELETE');
   }
 
-  getScheduleDetails(installedAppId: string, scheduleName: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'GET');
+  getScheduleDetails(installedAppId: string, scheduleName: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'GET');
   }
 
-  deleteSpecificSchedule(installedAppId: string, scheduleName: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'DELETE');
+  deleteSpecificSchedule(installedAppId: string, scheduleName: string, smartAppToken?: string) : rp.RequestPromise {
+    let authToken = this.getAuthToken(smartAppToken);
+    return buildRequest(authToken, `installedApps/${installedAppId}/schedules/${scheduleName}`, 'DELETE');
+  }
+
+  getAuthToken(token: string | undefined) : string {
+    if (token) {
+      return token;
+    }
+    return this.personalAccessToken;
   }
 }

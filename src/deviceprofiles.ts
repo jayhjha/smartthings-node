@@ -12,14 +12,14 @@ export class DeviceComponent {
 }
 
 export default class DeviceProfiles {
-  authToken: string;
+  personalAccessToken: string;
 
-  constructor(authToken: string) {
-    this.authToken = authToken;
+  constructor(personalAccessToken: string) {
+    this.personalAccessToken = personalAccessToken;
   }
 
   listDeviceProfiles() : rp.RequestPromise{
-    return buildRequest(this.authToken, `deviceprofiles`, 'GET');
+    return buildRequest(this.personalAccessToken, `deviceprofiles`, 'GET');
   }
 
   createDeviceProfile(name: string, components: Array<DeviceComponent>, metadata?: {}) : rp.RequestPromise {
@@ -31,14 +31,14 @@ export default class DeviceProfiles {
     if (metadata) {
       body.metadata = {};
     }
-    return buildRequest(this.authToken, `deviceprofiles`, 'POST', body);
+    return buildRequest(this.personalAccessToken, `deviceprofiles`, 'POST', body);
   }
 
   getDeviceProfileDescription(deviceProfileId: string): rp.RequestPromise {
-    return buildRequest(this.authToken, `deviceprofiles/${deviceProfileId}`, 'GET');
+    return buildRequest(this.personalAccessToken, `deviceprofiles/${deviceProfileId}`, 'GET');
   }
 
   deleteDeviceProfile(deviceProfileId: string) : rp.RequestPromise {
-    return buildRequest(this.authToken, `deviceprofiles/${deviceProfileId}`, 'DELETE');
+    return buildRequest(this.personalAccessToken, `deviceprofiles/${deviceProfileId}`, 'DELETE');
   }
 }
