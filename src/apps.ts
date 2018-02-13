@@ -17,7 +17,9 @@ export default class Apps {
       description: description,
       singleInstance: singleInstance,
       appType: 'WEBHOOK_SMART_APP',
-      targetUrl: targetUrl
+      webhookSmartApp: {
+        targetUrl: targetUrl
+      }      
     };
     return buildRequest(authToken, 'apps', 'POST', body);
   }
@@ -31,7 +33,9 @@ export default class Apps {
       description: description,
       singleInstance: singleInstance,
       appType: 'LAMBDA_SMART_APP',
-      functions: functions
+      lambdaSmartApp: {
+        functions: functions
+      }
     };
     return buildRequest(authToken, 'apps', 'POST', body);
   }
