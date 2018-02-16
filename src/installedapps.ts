@@ -21,7 +21,7 @@ export default class InstalledApps {
 
   getInstalledApp(installedAppId: string, smartAppToken?: string) {
     let authToken = this.getAuthToken(smartAppToken);
-    return buildRequest(authToken, `installedApps/${installedAppId}`, 'GET');
+    return buildRequest(authToken, `installedapps/${installedAppId}`, 'GET');
   }
 
   deleteInstalledApp(installedAppId: string, locationId?: string, smartAppToken?: string) {
@@ -30,7 +30,7 @@ export default class InstalledApps {
     if (locationId) {
       queryParams = {locationId: locationId};
     }
-    return buildRequest(authToken, `installedApps/${installedAppId}`, 'DELETE', queryParams);
+    return buildRequest(authToken, `installedapps/${installedAppId}`, 'DELETE', queryParams);
   }
   
   getInstalledAppConfig(installedAppId: string, configStatus?: string, smartAppToken?: string) {
@@ -39,12 +39,12 @@ export default class InstalledApps {
     if (configStatus) {
       queryParams = {configStatus: configStatus};
     }
-    return buildRequest(authToken, `installedApps/${installedAppId}/configs`, 'GET', queryParams);
+    return buildRequest(authToken, `installedapps/${installedAppId}/configs`, 'GET', queryParams);
   }
 
   getInstalledAppConfigEntries(installedAppId: string, configId: string, smartAppToken?: string) {
     let authToken = this.getAuthToken(smartAppToken);
-    return buildRequest(authToken, `installedApps/${installedAppId}/configs/${configId}`, 'GET');
+    return buildRequest(authToken, `installedapps/${installedAppId}/configs/${configId}`, 'GET');
   }
 
   getAuthToken(token: string | undefined) : string {

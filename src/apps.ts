@@ -40,9 +40,12 @@ export default class Apps {
     return buildRequest(authToken, 'apps', 'POST', body);
   }
 
-  listApps(appType: string, smartAppToken?: string) : rp.RequestPromise {
+  listApps(appType?: string, smartAppToken?: string) : rp.RequestPromise {
     let authToken = this.getAuthToken(smartAppToken);
-    let queryParams = {appType: appType};
+    let queryParams = {};
+    if (appType) {
+      queryParams = {appType: appType};
+    }
     return buildRequest(authToken, 'apps', 'GET', queryParams);
   }
 
@@ -59,7 +62,9 @@ export default class Apps {
       description: description,
       singleInstance: singleInstance,
       appType: 'WEBHOOK_SMART_APP',
-      targetUrl: targetUrl
+      webhookSmartApp: {
+        targetUrl: targetUrl
+      }
     };
     return buildRequest(authToken, `apps/${appNameOrId}`, 'PUT', body);
   }
@@ -73,7 +78,9 @@ export default class Apps {
       description: description,
       singleInstance: singleInstance,
       appType: 'LAMBDA_SMART_APP',
-      functions: functions
+      lambdaSmartApp: {
+        functions: functions
+      }
     };
     return buildRequest(authToken, `apps/${appNameOrId}`, 'PUT', body);
   }

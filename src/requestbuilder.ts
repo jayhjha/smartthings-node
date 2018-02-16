@@ -1,7 +1,10 @@
 import * as rp from 'request-promise';
+import * as prettyjson from 'prettyjson';
+
 import config from './config';
 
 const baseApiUrl = config.stApi.baseUrl;
+let prettyjsonOptions = {};
 
 export default function buildRequest(token: string, path: string, method: string, params?: {}) : rp.RequestPromise {
   let url = `${baseApiUrl}${path}`;
@@ -23,5 +26,7 @@ export default function buildRequest(token: string, path: string, method: string
       options.body = params; 
     }
   }
+  console.log('Request::');
+  console.log(prettyjson.render(options, prettyjsonOptions));
   return rp(options);
 }
