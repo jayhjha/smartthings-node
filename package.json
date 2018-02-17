@@ -1,9 +1,9 @@
 {
   "name": "smartthings-node",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Node client for Samsung SmartThings API",
   "main": "dist/index.js",
-  "types": "dist/indes.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
