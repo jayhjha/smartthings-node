@@ -28,5 +28,6 @@ export default function buildRequest(token: string, path: string, method: string
   }
   console.log('Request::');
   console.log(prettyjson.render(options, prettyjsonOptions));
+  console.log('\n');
   return rp(options);
 }
