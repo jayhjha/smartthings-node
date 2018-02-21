@@ -54,7 +54,6 @@ export default class Devices {
     return buildRequest(authToken, `devices/${deviceId}/commands`, 'POST', commands);
   }
 
-  //TODO:: Not working. Figure out how device events work
   createDeviceEvents(deviceId: string, deviceEvents: Array<{}>, smartAppToken?: string): rp.RequestPromise {
     let authToken = this.getAuthToken(smartAppToken);
     return buildRequest(authToken, `devices/${deviceId}/events`, 'POST', deviceEvents);
