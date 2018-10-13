@@ -82,7 +82,7 @@ let handleEvent = (eventData: any) => {
 }
 
 /**
- * Send comman to the bulb to set the color as determined by parsing the weather and brightness 
+ * Send command to the bulb to set the color as determined by parsing the weather and brightness 
  * level to a fixed value of 20.
  * @param installedApp Installed App Details sent by the SmartThings Cloud
  * @param token Smart App token sent by the SmartThings Cloud as part of Event data
