@@ -41,7 +41,7 @@ let st = new smartthings("PERSONAL_ACCESS_TOKEN");
 
 Use a sub-module. For example, to get a list of devices with switch capability:
 ```js
-st.devices.listDevicesByCapbility('switch')
+st.devices.listDevicesByCapability('switch')
 .then(deviceList => {
   console.log(deviceList);
 })
