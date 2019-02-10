@@ -36,7 +36,7 @@ let st = new SmartThings("PERSONAL_ACCESS_TOKEN"));
 If you are using the CommonJS syntax:
 ```js
 const smartthings = require("smartthings-node");
-let st = new smartthings("PERSONAL_ACCESS_TOKEN");
+let st = new smartthings.SmartThings("PERSONAL_ACCESS_TOKEN");
 ```
 
 Use a sub-module. For example, to get a list of devices with switch capability:
