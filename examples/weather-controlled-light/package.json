@@ -21,14 +21,15 @@
     "@types/express": "^4.0.39",
     "@types/jsonwebtoken": "^7.2.5",
     "@types/prettyjson": "^0.0.28",
-    "@types/request-promise": "^4.1.39",
+    "@types/request": "^2.48.1",
+    "@types/request-promise": "^4.1.42",
     "body-parser": "^1.18.2",
     "config": "^1.29.0",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0",
     "path": "^0.12.7",
     "prettyjson": "^1.2.1",
-    "request": "^2.83.0",
+    "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "smartthings-node": "^0.0.4"
   }

@@ -21,11 +21,11 @@
   "dependencies": {
     "@types/config": "0.0.33",
     "@types/prettyjson": "0.0.28",
-    "@types/request": "^2.0.9",
-    "@types/request-promise": "^4.1.39",
+    "@types/request": "^2.48.1",
+    "@types/request-promise": "^4.1.42",
     "config": "^1.29.0",
     "prettyjson": "^1.2.1",
-    "request": "^2.83.0",
+    "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }
 }
